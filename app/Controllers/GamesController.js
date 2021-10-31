@@ -67,7 +67,8 @@ class GamesController {
         console.log('GamesController allGames called.');
         return new Promise((resolve, reject) => {
             const query = `
-                           SELECT *
+                           SELECT 
+                                *
                             FROM 
                                 games
                             WHERE 
@@ -98,7 +99,8 @@ class GamesController {
         console.log('GamesController allGames called.');
         return new Promise((resolve, reject) => {
             const query = `
-                           SELECT *
+                           SELECT 
+                                *
                             FROM 
                                 games
                             ORDER BY
@@ -122,6 +124,31 @@ class GamesController {
         }).catch(err => console.log("Database connection error.", err));
     }
 
+    async gameWithID(ctx) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                       SELECT *
+                        FROM 
+                            games
+                        WHERE 
+                            id = ?
+                        `;
+            dbConnection.query({
+                sql: query,
+                values: [ctx.params.gameID]
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in RoutesController::gameWithID", error);
+                    ctx.body = [];
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
 }
 
 module.exports = GamesController;

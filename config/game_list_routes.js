@@ -46,6 +46,7 @@ gamesRouter.get('/all-games', GamesController.allGames, err => console.log(`allG
 gamesRouter.get('/game-name', GamesController.gameWithGameName, err => console.log(`gameWithGameName ran into an error: ${err}`));
 gamesRouter.get('/recent-games', GamesController.recentGames, err => console.log(`recent-games ran into an error: ${err}`));
 gamesRouter.get('/top-games', GamesController.topGames, err => console.log(`top-games ran into an error: ${err}`));
+gamesRouter.get('/:gameID', GamesController.gameWithID, err => console.log(`gameWithID ran into an error: ${err}`));
 
 router.use(
     '',
