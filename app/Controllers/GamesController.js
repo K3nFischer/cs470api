@@ -11,6 +11,67 @@ class GamesController {
         console.log('Constructor of GamesController is called.');
     }
 
+    async allGenres(ctx){
+        console.log('GamesController allGenres called.');
+        return new Promise((resolve, reject) => {
+            const query = `
+            SELECT name, id FROM genres`;
+            dbConnection.query({
+                sql: query,
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::allGenres", error);
+                    ctx.body = []
+                    ctx.status = 200;
+                    return reject(error)
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
+    async allPerspectives(ctx){
+        console.log('GamesController allPerspectives called.');
+        return new Promise((resolve, reject) => {
+            const query = `SELECT name, id FROM cs470_gamelist.player_perspectives`;
+            dbConnection.query({
+                sql: query,
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::allPerspectives", error);
+                    ctx.body = []
+                    ctx.status = 200;
+                    return reject(error)
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
+    async allPlatforms(ctx){
+        console.log('GamesController allPlatforms called.');
+        return new Promise((resolve, reject) => {
+            const query = `SELECT name, id FROM cs470_gamelist.platforms`;
+            dbConnection.query({
+                sql: query,
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::allPlatforms", error);
+                    ctx.body = []
+                    ctx.status = 200;
+                    return reject(error)
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
     async allGames(ctx) {
         console.log('GamesController allGames called.');
         return new Promise((resolve, reject) => {
