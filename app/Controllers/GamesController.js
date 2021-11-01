@@ -133,7 +133,7 @@ class GamesController {
                             FROM 
                                 games
                             WHERE 
-                                first_release_date < 1634985471
+                                first_release_date < ?
                             ORDER BY
                                 first_release_date DESC
                             LIMIT
@@ -141,6 +141,7 @@ class GamesController {
                             `;
             dbConnection.query({
                 sql: query,
+                values: [ctx.params.currentDate]
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::allGames", error);
