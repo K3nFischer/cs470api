@@ -42,6 +42,8 @@ const gamesRouter = require('koa-router')({
    prefix: '/games'
 });
 
+gamesRouter.get('/gamesNumberWithFilter/:genres/:platform/:perspective', GamesController.gamesNumberWithFilter, err => console.log(`gamesNumberWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesWithFilter/:genres/:platform/:perspective/:start', GamesController.gamesWithFilter, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 gamesRouter.get('/all-games', GamesController.allGames, err => console.log(`allGames ran into an error: ${err}`));
 gamesRouter.get('/game-name', GamesController.gameWithGameName, err => console.log(`gameWithGameName ran into an error: ${err}`));
 gamesRouter.get('/recent-games/:currentDate', GamesController.recentGames, err => console.log(`recent-games ran into an error: ${err}`));
