@@ -2,6 +2,7 @@ const dbConnection = require('../../database/mySQLconnect');
 const dateFormat = require('dateformat');
 const buildStudentViewFromCourses = require('../Schema/buildStudentViewFromCourses');
 
+
 function now() {
     return dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 }
@@ -15,7 +16,7 @@ class GamesController {
         console.log('GamesController allGenres called.');
         return new Promise((resolve, reject) => {
             const query = `
-            SELECT name, id FROM genres`;
+            SELECT name, id FROM genres order by name`;
             dbConnection.query({
                 sql: query,
             }, (error, tuples) => {
@@ -55,7 +56,7 @@ class GamesController {
     async allPlatforms(ctx){
         console.log('GamesController allPlatforms called.');
         return new Promise((resolve, reject) => {
-            const query = `SELECT name, id FROM cs470_gamelist.platforms`;
+            const query = `SELECT name, id FROM cs470_gamelist.platforms order by name` ;
             dbConnection.query({
                 sql: query,
             }, (error, tuples) => {
@@ -132,8 +133,82 @@ class GamesController {
                         FROM 
                             games
                         WHERE 
-                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) LIMIT ?, 100
-                        `;
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY aggregated_rating desc LIMIT ?, 100`;
+            dbConnection.query({
+                sql: query,
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::gamesWithFilter", error);
+                    ctx.body = [];
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+    async gamesWithFilterRecent(ctx) {
+
+        return new Promise((resolve, reject) => {
+            const query = `
+                       SELECT *
+                        FROM 
+                            games
+                        WHERE 
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY first_release_date desc LIMIT ?, 100`;
+            dbConnection.query({
+                sql: query,
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::gamesWithFilter", error);
+                    ctx.body = [];
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+    async gamesWithFilterAlpha(ctx) {
+
+        return new Promise((resolve, reject) => {
+            const query = `
+                       SELECT *
+                        FROM 
+                            games
+                        WHERE 
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY name asc LIMIT ?, 100`;
+            dbConnection.query({
+                sql: query,
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::gamesWithFilter", error);
+                    ctx.body = [];
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+    async gamesWithFilterRating(ctx) {
+
+        return new Promise((resolve, reject) => {
+            const query = `
+                       SELECT *
+                        FROM 
+                            games
+                        WHERE 
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY aggregated_rating desc LIMIT ?, 100`;
             dbConnection.query({
                 sql: query,
                 values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
