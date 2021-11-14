@@ -30,11 +30,12 @@ router.get('/', function (ctx) {
 */
 
 //Login
-const LoginController = new (require('../app/Controllers/LoginController.js'))();
+const LoginController = new (require('../app/Controllers/GameListLoginController.js'))();
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
-loginRouter.get('/:user_id', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
+loginRouter.get('/:username/:credentials', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
+loginRouter.get('create/:username/:email/:credentials', LoginController.createUser, (err) => console.log("router.js: login create user error:", err));
 
 //Games
 const GamesController = new (require('../app/Controllers/GamesController.js'))();
@@ -58,7 +59,6 @@ gamesRouter.get('/top-games', GamesController.topGames, err => console.log(`top-
 gamesRouter.get('/all-genres', GamesController.allGenres, err => console.log(`allGenres ran into an error: ${err}`));
 gamesRouter.get('/all-perspectives', GamesController.allPerspectives, err => console.log(`allPerspectives ran into an error: ${err}`));
 gamesRouter.get('/all-platforms', GamesController.allPlatforms, err => console.log(`allPlatforms ran into an error: ${err}`));
-//gamesRouter.get('/gen-table/:table', GamesController.genTable, err => console.log(`genTable ran into an error: ${err}`));
 gamesRouter.get('/:gameID', GamesController.gameWithID, err => console.log(`gameWithID ran into an error: ${err}`));
 
 router.use(

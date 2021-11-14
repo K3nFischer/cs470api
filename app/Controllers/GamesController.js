@@ -103,7 +103,8 @@ class GamesController {
                         FROM 
                             games
                         ORDER BY
-                            aggregated_rating
+                            aggregated_rating DESC
+                        LIMIT 1000;
                         `;
             dbConnection.query({
                 sql: query,
