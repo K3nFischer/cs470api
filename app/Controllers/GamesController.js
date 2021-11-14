@@ -33,6 +33,28 @@ class GamesController {
         }).catch(err => console.log("Database connection error.", err));
     }
 
+    async gameLookup(ctx){
+        console.log('GamesController gameLookup called.');
+        return new Promise((resolve, reject) => {
+            const query = `
+            SELECT * FROM games where id = ?`;
+            dbConnection.query({
+                sql: query,
+                values: parseInt(ctx.params.game)
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::allGenres", error);
+                    ctx.body = []
+                    ctx.status = 200;
+                    return reject(error)
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
     async allPerspectives(ctx){
         console.log('GamesController allPerspectives called.');
         return new Promise((resolve, reject) => {
@@ -114,6 +136,32 @@ class GamesController {
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::gamesNumberWithFilter", error);
+                    ctx.body = [];
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
+    async genresForGame(ctx){
+        return new Promise((resolve, reject) => {
+            const query = `
+                       SELECT name 
+                        FROM 
+                            genres
+                        WHERE
+                            name = ?
+                        `;
+            dbConnection.query({
+                sql: query,
+                values: ctx.params.genres
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in GamesController::genresForGame", error);
                     ctx.body = [];
                     ctx.status = 200;
                     return reject(error);

@@ -48,6 +48,9 @@ gamesRouter.get('/gamesWithFilterAlpha/:genres/:platform/:perspective/:start', G
 gamesRouter.get('/gamesWithFilterRating/:genres/:platform/:perspective/:start', GamesController.gamesWithFilterRating, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 gamesRouter.get('/gamesWithFilter/:genres/:platform/:perspective/:start', GamesController.gamesWithFilter, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 
+gamesRouter.get('/genresForGame/:genres', GamesController.genresForGame, err => console.log(`genresForGame ran into an error: ${err}`));
+gamesRouter.get('/gameLookup/:game', GamesController.gameLookup, err=> console.log(`gameLookup ran into an error: ${err}`));
+
 gamesRouter.get('/all-games', GamesController.allGames, err => console.log(`allGames ran into an error: ${err}`));
 gamesRouter.get('/game-name', GamesController.gameWithGameName, err => console.log(`gameWithGameName ran into an error: ${err}`));
 gamesRouter.get('/recent-games/:currentDate', GamesController.recentGames, err => console.log(`recent-games ran into an error: ${err}`));
