@@ -17,8 +17,8 @@ var connection = mysql.createConnection({
 
     host: 'localhost',
     port: 3306,
-    user: 'jacob',
-    password: 'root',
+    user: 'root',
+    password: 'password',
     database: 'cs470_gamelist'
 });
 

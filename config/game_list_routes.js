@@ -35,7 +35,7 @@ const loginRouter = require('koa-router')({
     prefix: '/login'
 });
 loginRouter.get('/:username/:credentials', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
-loginRouter.get('create/:username/:email/:credentials', LoginController.createUser, (err) => console.log("router.js: login create user error:", err));
+loginRouter.get('/create/:username/:email/:credentials', LoginController.createUser, (err) => console.log("router.js: login create user error:", err));
 
 //Games
 const GamesController = new (require('../app/Controllers/GamesController.js'))();
@@ -61,11 +61,23 @@ gamesRouter.get('/all-perspectives', GamesController.allPerspectives, err => con
 gamesRouter.get('/all-platforms', GamesController.allPlatforms, err => console.log(`allPlatforms ran into an error: ${err}`));
 gamesRouter.get('/:gameID', GamesController.gameWithID, err => console.log(`gameWithID ran into an error: ${err}`));
 
+//Lists
+const ListController = new (require('../app/Controllers/ListController.js'))();
+const listRouter = require('koa-router')({
+    prefix: '/lists'
+});
+
+listRouter.get('/create/:userID/:listID', ListController.createList, err => console.log(`createList ran into an error: ${err}`));
+listRouter.get('/delete/:listID', ListController.deleteList, err => console.log(`deleteList ran into an error: ${err}`));
+listRouter.get('/all/:userID', ListController.getAllLists, err => console.log(`getLists ran into an error: ${err}`));
+listRouter.get('/add/:listID/:gameID', ListController.addToList, err => console.log(`addToList ran into an error: ${err}`));
+listRouter.get('/get/:listID', ListController.getList, err => console.log(`getList ran into an error: ${err}`));
+
 router.use(
     '',
     loginRouter.routes(),
-    gamesRouter.routes()
-
+    gamesRouter.routes(),
+    listRouter.routes()
 );
 
 module.exports = function (app) {
