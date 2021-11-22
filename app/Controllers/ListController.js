@@ -33,6 +33,7 @@ class ListController {
                     ctx.status = 200;
                     return reject(error);
                 }
+                console.log("returning from getAllLists: ", tuples);
                 ctx.body = tuples;
                 ctx.status = 200;
                 return resolve();

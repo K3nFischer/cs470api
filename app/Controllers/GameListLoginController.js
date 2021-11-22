@@ -21,7 +21,11 @@ class GameListLoginController {
                 }, (error, tuples) => {
                     if(error) {
                         console.log("Query error.", error);
-                        return reject('Query error. Error msg: error');
+                        ctx.body = {status: "BAD"};
+                        return reject('Could not create user');
+                    } else {
+                        ctx.body = {status: "OK"};
+                        return resolve();
                     }
                 }
             )
@@ -37,7 +41,7 @@ class GameListLoginController {
                 {
                     sql: query,
                     values: [ctx.params.username]
-                }, (error, tuples) => {
+                }, async (error, tuples) => {
                     if (error) {
                         console.log("Query error.", error);
                         return reject(error);
@@ -46,12 +50,22 @@ class GameListLoginController {
                         const bcrypt = require('bcryptjs');
                         const password = ctx.params.credentials;
                         const hash = tuples[0].credentials;
-                        ctx.body = {
-                            status: "OK",
-                            user: tuples[0].username,
-                        };
+                        const match = await bcrypt.compare(password, hash);
+                        console.log(match);
+                        if(match) {
+                            ctx.body = {
+                                status: "OK",
+                                user: tuples[0].username,
+                            };
+                        } else {
+                            ctx.body = {
+                                status: "BAD",
+                            };
+                            return reject('Incorrect Password');
+                        }
                     } else {
                         console.log('Not able to identify the user.');
+                        ctx.body = {status:"BAD"};
                         return reject('No such user.');
                     }
                     return resolve();
