@@ -182,7 +182,7 @@ class GamesController {
                         FROM 
                             games
                         WHERE 
-                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY aggregated_rating desc LIMIT ?, 100`;
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY aggregated_rating desc LIMIT ?, 102`;
             dbConnection.query({
                 sql: query,
                 values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
@@ -207,10 +207,10 @@ class GamesController {
                         FROM 
                             games
                         WHERE 
-                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY first_release_date desc LIMIT ?, 100`;
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) AND name LIKE "%"?"%" ORDER BY first_release_date desc LIMIT ?, 102`;
             dbConnection.query({
                 sql: query,
-                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, ctx.params.text, parseInt(ctx.params.start)]
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::gamesWithFilter", error);
@@ -232,10 +232,10 @@ class GamesController {
                         FROM 
                             games
                         WHERE 
-                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY name asc LIMIT ?, 100`;
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) AND name LIKE "%"?"%" ORDER BY name asc LIMIT ?, 102`;
             dbConnection.query({
                 sql: query,
-                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective,ctx.params.text, parseInt(ctx.params.start)]
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::gamesWithFilter", error);
@@ -257,10 +257,10 @@ class GamesController {
                         FROM 
                             games
                         WHERE 
-                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) ORDER BY aggregated_rating desc LIMIT ?, 100`;
+                            JSON_CONTAINS(genres, ?) and JSON_CONTAINS(platforms, ?) and JSON_CONTAINS(player_perspectives, ?) AND name LIKE "%"?"%" ORDER BY aggregated_rating desc LIMIT ?, 102`;
             dbConnection.query({
                 sql: query,
-                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective, parseInt(ctx.params.start)]
+                values: [ctx.params.genres, ctx.params.platform, ctx.params.perspective,ctx.params.text, parseInt(ctx.params.start)]
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::gamesWithFilter", error);
