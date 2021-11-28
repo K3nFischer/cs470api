@@ -67,7 +67,7 @@ const listRouter = require('koa-router')({
     prefix: '/lists'
 });
 
-listRouter.get('/create/:userID/:listID', ListController.createList, err => console.log(`createList ran into an error: ${err}`));
+listRouter.get('/create/:userID/:listName', ListController.createList, err => console.log(`createList ran into an error: ${err}`));
 listRouter.get('/delete/:listID', ListController.deleteList, err => console.log(`deleteList ran into an error: ${err}`));
 listRouter.get('/all/:userID', ListController.getAllLists, err => console.log(`getLists ran into an error: ${err}`));
 listRouter.get('/add/:listID/:gameID', ListController.addToList, err => console.log(`addToList ran into an error: ${err}`));

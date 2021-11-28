@@ -314,11 +314,11 @@ class GamesController {
                             ORDER BY
                                 first_release_date DESC
                             LIMIT
-                                10
+                                20
                             `;
             dbConnection.query({
                 sql: query,
-                values: [ctx.params.currentDate]
+                values: [parseInt(ctx.params.currentDate)]
             }, (error, tuples) => {
                 if (error) {
                     console.log("Connection error in GamesController::allGames", error);
@@ -345,7 +345,7 @@ class GamesController {
                             ORDER BY
                                 aggregated_rating DESC
                             LIMIT
-                                10
+                                20
                             `;
             dbConnection.query({
                 sql: query,
