@@ -1,7 +1,7 @@
 const dbConnection = require('../../database/mySQLconnect');
 const setAccessToken = require('../../config/setAccessToken');
 
-class GameListLoginController {
+/*class GameListLoginController {
 
     constructor() {
         console.log('Constructor of GameListLoginController is called.');
@@ -76,4 +76,4 @@ class GameListLoginController {
 
 }
 
-module.exports = GameListLoginController;
+module.exports = GameListLoginController;*/

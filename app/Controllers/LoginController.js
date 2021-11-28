@@ -2,7 +2,7 @@ const dbConnection = require('../../database/mySQLconnect');
 const setAccessToken = require('../../config/setAccessToken');
 
 
-require('dotenv').config();
+/*require('dotenv').config();
 
 class LoginController {
     async authorizeUser(ctx) {
@@ -52,4 +52,4 @@ class LoginController {
 
 }
 
-module.exports = LoginController;
+module.exports = LoginController;*/
