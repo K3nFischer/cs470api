@@ -1,6 +1,6 @@
 const dbConnection = require('../../database/mySQLconnect');
 
-/*class ListController {
+class ListController {
 
     constructor() {
         console.log('Constructor of ListController is called.');
@@ -138,4 +138,4 @@ const dbConnection = require('../../database/mySQLconnect');
 
 }
 
-module.exports = ListController;*/
+module.exports = ListController;
