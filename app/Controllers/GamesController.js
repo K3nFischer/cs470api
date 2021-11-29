@@ -78,7 +78,17 @@ class GamesController {
     async allPlatforms(ctx){
         console.log('GamesController allPlatforms called.');
         return new Promise((resolve, reject) => {
-            const query = `SELECT name, id FROM cs470_gamelist.platforms order by name` ;
+            const query = `SELECT 
+                                name, id 
+                           FROM 
+                                cs470_gamelist.platforms
+                           WHERE
+                                id
+                           IN
+                                (6, 4, 18, 41, 5, 41, 130, 11, 12, 49, 169, 8, 9, 48, 167, 7)
+                           ORDER BY
+                                name
+                           `;
             dbConnection.query({
                 sql: query,
             }, (error, tuples) => {
