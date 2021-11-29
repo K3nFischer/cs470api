@@ -34,6 +34,7 @@ const LoginController = new (require('../app/Controllers/GameListLoginController
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
+
 loginRouter.get('/:username/:credentials', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
 loginRouter.get('/create/:username/:email/:credentials', LoginController.createUser, (err) => console.log("router.js: login create user error:", err));
 
@@ -43,10 +44,15 @@ const gamesRouter = require('koa-router')({
    prefix: '/games'
 });
 
-gamesRouter.get('/gamesNumberWithFilter/:genres/:platform/:perspective', GamesController.gamesNumberWithFilter, err => console.log(`gamesNumberWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesNumberWithFilter/:genres/:platform/:perspective/:text', GamesController.gamesNumberWithFilter, err => console.log(`gamesNumberWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesNumberWithFilterNoText/:genres/:platform/:perspective', GamesController.gamesNumberWithFilterNoText, err => console.log(`gamesNumberWithFilter ran into an error: ${err}`));
+
 gamesRouter.get('/gamesWithFilterRecent/:genres/:platform/:perspective/:text/:start', GamesController.gamesWithFilterRecent, err => console.log(`gamesWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesWithFilterRecentNoText/:genres/:platform/:perspective/:start', GamesController.gamesWithFilterRecentNoText, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 gamesRouter.get('/gamesWithFilterAlpha/:genres/:platform/:perspective/:text/:start', GamesController.gamesWithFilterAlpha, err => console.log(`gamesWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesWithFilterAlphaNoText/:genres/:platform/:perspective/:start', GamesController.gamesWithFilterAlphaNoText, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 gamesRouter.get('/gamesWithFilterRating/:genres/:platform/:perspective/:text/:start', GamesController.gamesWithFilterRating, err => console.log(`gamesWithFilter ran into an error: ${err}`));
+gamesRouter.get('/gamesWithFilterRatingNoText/:genres/:platform/:perspective/:start', GamesController.gamesWithFilterRatingNoText, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 gamesRouter.get('/gamesWithFilter/:genres/:platform/:perspective/:start', GamesController.gamesWithFilter, err => console.log(`gamesWithFilter ran into an error: ${err}`));
 
 gamesRouter.get('/genresForGame/:genres', GamesController.genresForGame, err => console.log(`genresForGame ran into an error: ${err}`));
@@ -75,9 +81,9 @@ listRouter.get('/get/:listID', ListController.getList, err => console.log(`getLi
 
 router.use(
     '',
-    loginRouter.routes(),
+   // loginRouter.routes(),
     gamesRouter.routes(),
-    listRouter.routes()
+   // listRouter.routes()
 );
 
 module.exports = function (app) {
