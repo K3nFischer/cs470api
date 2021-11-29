@@ -136,6 +136,33 @@ class ListController {
         }).catch(err => console.log("Database connection error.", err));
     }
 
+    async removeGame(ctx) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                DELETE FROM
+                    list_game
+                WHERE
+                    listid = ?
+                AND
+                    gameid = ?
+            `;
+            dbConnection.query({
+                sql: query,
+                values: [ctx.params.listID, ctx.params.gameID]
+            }, (error, tuples) => {
+                if (error) {
+                    console.log("Connection error in ListController::deleteGame", error);
+                    ctx.status = 200;
+                    return reject(error);
+                }
+                console.log("Delete Successful");
+                ctx.body = tuples;
+                ctx.status = 200;
+                return resolve();
+            });
+        }).catch(err => console.log("Database connection error.", err));
+    }
+
 }
 
 module.exports = ListController;

@@ -72,6 +72,7 @@ listRouter.get('/delete/:listID', ListController.deleteList, err => console.log(
 listRouter.get('/all/:userID', ListController.getAllLists, err => console.log(`getLists ran into an error: ${err}`));
 listRouter.get('/add/:listID/:gameID', ListController.addToList, err => console.log(`addToList ran into an error: ${err}`));
 listRouter.get('/get/:listID', ListController.getList, err => console.log(`getList ran into an error: ${err}`));
+listRouter.get('/remove/:listID/:gameID', ListController.removeGame, err => console.log(`removeGame ran into an error: ${err}`));
 
 router.use(
     '',
