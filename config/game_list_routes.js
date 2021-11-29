@@ -82,9 +82,9 @@ listRouter.get('/remove/:listID/:gameID', ListController.removeGame, err => cons
 
 router.use(
     '',
-   // loginRouter.routes(),
+    loginRouter.routes(),
     gamesRouter.routes(),
-   // listRouter.routes()
+    listRouter.routes()
 );
 
 module.exports = function (app) {
