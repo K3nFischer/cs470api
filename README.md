@@ -2,5 +2,5 @@
 
 # Required Libraries
 
-npm install
-npm install bcryptjs
+# `npm install`
+# `npm install bcryptjs`
