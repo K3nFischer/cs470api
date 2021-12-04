@@ -4,3 +4,4 @@
 
 ## `npm install`
 ## `npm install bcryptjs`
+## `npm install koa-router`
